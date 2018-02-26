@@ -68,6 +68,12 @@ export default {
                 page: ['search','form','manage'],
                 navdata:[
                   {
+                    id:'nav0',
+                    menu_name:'notice',
+                    nav_name:'Notice',
+                    icon:'android-notifications-none'
+                  },
+                  {
                     id:'nav1',
                     menu_name:'search',
                     nav_name:'Search',
@@ -97,6 +103,12 @@ export default {
                     nav_name:'Manage',
                     icon:'upload'
                   },
+                  {
+                    id:'nav6',
+                    menu_name:'transfer',
+                    nav_name:'Transfer',
+                    icon:'document-text'
+                  }
                 ]
 
 
@@ -133,11 +145,15 @@ export default {
                         this.$router.push('/login')
                     }else{
                         if(this.user==='admin'){
-                          this.$Notice.open({
-                              title: 'Notice',
-                              desc: '有新的分享需要查看。。。。',
-                              duration: 3
+                          this.$api.get('/notice/count' , null, r => {
+                            let count= r.data.data
+                            this.$Notice.open({
+                                title: 'Notice',
+                                desc: '有'+count+'条公告需要您查看',
+                                duration: 3
+                            })
                           })
+
                         }
 
                     }
@@ -158,6 +174,7 @@ export default {
     position: relative;
     border-radius: 4px;
     overflow: hidden;
+
 }
 
 .layout-breadcrumb {

@@ -38,7 +38,19 @@ export default new Router({
                 {
                     path: '/link:id',
                     component: resolve => require(['../components/page/question.vue'], resolve)
-                }
+                },
+                {
+                    path: '/transfer',
+                    component: resolve => require(['../components/page/transfer.vue'], resolve)
+                },
+                {
+                    path: '/notice',
+                    component: resolve => require(['../components/common/notice.vue'], resolve)
+                },
+                {
+                    path: '/notice_detail:id',
+                    component: resolve => require(['../components/page/notice_detail.vue'], resolve)
+                },
 
             ]
         },

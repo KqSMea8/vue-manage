@@ -4,7 +4,7 @@
 QA录入系统
 </h1>
     <div class="login">
-      <Form ref="formInline" :model="formInline" :rules="ruleInline">
+      <Form ref="formInline" :model="formInline" :rules="ruleInline" >
       <FormItem prop="user">
           <Input type="text" v-model="formInline.user" placeholder="Username">
               <Icon type="ios-person-outline" slot="prepend"></Icon>
@@ -16,7 +16,7 @@ QA录入系统
           </Input>
       </FormItem>
       <FormItem>
-          <Button type="primary" @click="handleSubmit('formInline')" long>Login</Button>
+          <Button type="primary" @click="handleSubmit('formInline')" long >Login</Button>
       </FormItem>
   </Form>
     </div>
@@ -63,7 +63,7 @@ export default {
                                     Cookies.set('user', form.user);
                                     Cookies.set('password', form.password);
                                     this.$Message.success(form.user +',欢迎登录!');
-                                    this.$router.push('/search');
+                                    this.$router.push('/notice');
                               }else{
                                   this.$Message.error('密码错误，请重新输入');
                               }

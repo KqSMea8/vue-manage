@@ -17,11 +17,20 @@
       </Modal>
     </div>
     <div>
-    <h2>Question:</h2>
+    <h2>标题:</h2>
     <Input v-model="question" placeholder="Enter question title here" style="width: 100%"></Input>
-    <h2>Remark:</h2>
-    <Input v-model="remark" placeholder="Enter remark here" style="width: 100%"></Input>
-    <h2>Answer:</h2>
+    <h2>类型:</h2>
+    <RadioGroup v-model="types">
+       <Radio label="0">
+          <Icon type="bonfire"></Icon>
+           <span>分享</span>
+       </Radio>
+       <Radio label="1">
+          <Icon type="android-notifications"></Icon>
+           <span>公告</span>
+       </Radio>
+   </RadioGroup>
+    <h2>内容:</h2>
     <div class="rtf-content">
         <quill-editor ref="myTextEditor" v-model="answer" :options="editorOption" @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"></quill-editor>
     </div>
@@ -38,6 +47,7 @@
                 question:'',
                 remark:'',
                 answer: '',
+                types:0,
                 editorOption: {
 
                 }
@@ -57,17 +67,24 @@
             //console.log('editor ready!', editor)
           },
           onEditorChange({editor, html, text }) {
-            //console.log('editor change!', editor, html, text)
-            this.answer = html
+            //console.log('editor change!', editor, html, text) //使用v-model=answer，去除@change
+            if(this.ishtml==true){
+              this.answer =text
+            }else{
+              this.answer =html
+            }
+
           },
           increase(){
+
             let question=this.question;
             let answer=this.answer;
+            let type=this.types;
             if(question===''||answer===''){
               this.$Message.info('question or answer content is null')
             }else{
-                console.log("222",question,this.remark,answer)
-                this.$api.post('/question/add', {question:question,remark:this.remark,answer:answer}, r => {
+                this.$api.post('/question/add', {question:question,answer:answer,type:type}, r => {
+
                     if(r.data.data===true){
                         this.$Message.info('increase successful')
                         this.question=''

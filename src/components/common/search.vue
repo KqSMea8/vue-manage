@@ -11,8 +11,8 @@
         <Timeline>
             <div v-for="re in result">
                 <TimelineItem>
-                    <Icon type="ios-flame" slot="dot"></Icon><h3><router-link :to="'/link' + re.id">{{re.question}}</router-link></h3>
-                    <p class="content">{{re.remark}}</p>
+                    <Icon type="leaf" slot="dot"></Icon><h3><router-link :to="'/link' + re.id">{{re.question}}<p class="content">{{re.gmt_create}}</p></router-link>   </h3>
+
                 </TimelineItem>
             </div>
       </Timeline>
@@ -21,6 +21,7 @@
 </div>
 </template>
 <script>
+    import Cookies from 'js-cookie'
     export default {
         data () {
             return {
@@ -29,9 +30,9 @@
                 rows:10,
                 total:0,
                 words:'',
+                keywords:Cookies.get('words'),
                 result:[],
                 resp:[]
-
             }
         },
         created () {
@@ -43,6 +44,7 @@
                 if(r.data.data.length===0){
                     this.$Message.warning('没有符合该搜索条件的结果')
                 }else{
+                    Cookies.set('words', this.words);
                     let total=r.data.data.length
                     this.$Message.success('已搜索到'+total+'条记录')
                     this.resp=r.data.data
@@ -79,13 +81,15 @@
             }
           },
           backSearch(){
-            if(typeof this.id != "undefined" && this.id != null && this.id!= ""){
-                this.$api.get('/question/find_by_id' , {id:this.id}, r => {
-                  this.words= r.data.data.question
-                    this.searchdle()
-                })
-            }
-
+            //  if(typeof this.id != "undefined" && this.id != null && this.id!= ""){
+            //      this.$api.get('/question/find_by_id' , {id:this.id}, r => {
+            //       //this.words=r.data.data.question
+            //          this.words=this.keywords
+            //         this.searchdle()
+            //     })
+            // }
+             this.words=this.keywords
+             this.searchdle()
           }
       }
 
@@ -98,14 +102,13 @@
 }
 .search-content {
   margin: 10px 20px 0 30px;
-    height: 710px;
 }
 .time{
        font-size: 14px;
        font-weight: bold;
    }
 .content{
-    padding-left: 5px;
+    float: right;
    }
 
 </style>

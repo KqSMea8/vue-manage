@@ -58,8 +58,8 @@ export default {
                     this.$refs[name].validate((valid) => {
                         if (valid) {
                           let form=this.formInline;
-                          if(form.user === 'admin'||form.user === 'user'){
-                              if((form.user === 'admin'&&form.password === 'admin123')||(form.user === 'user'&&form.password === 'user123')){
+                          if(form.user === 'admin'||form.user === 'super'){
+                              if((form.user === 'admin'&&form.password === 'admin123')||(form.user === 'super'&&form.password === 'super123')){
                                     Cookies.set('user', form.user);
                                     Cookies.set('password', form.password);
                                     this.$Message.success(form.user +',欢迎登录!');

@@ -11,9 +11,9 @@
 <template>
   <div id="qa">
     <div class="submit-style">
-      <Button type="primary" @click="modal = true">issuance</Button>
+      <Button type="primary" @click="modal = true">提交</Button>
       <Modal v-model="modal" title="Tip" @on-ok="increase" @on-cancel="cancel">
-        <p>are you sure?</p>
+        <p>确认提交吗？</p>
       </Modal>
     </div>
     <div>
@@ -81,17 +81,17 @@
             let answer=this.answer;
             let type=this.types;
             if(question===''||answer===''){
-              this.$Message.info('question or answer content is null')
+              this.$Message.info('标题或内容不能为空！')
             }else{
                 this.$api.post('/question/add', {question:question,answer:answer,type:type}, r => {
 
                     if(r.data.data===true){
-                        this.$Message.info('increase successful')
+                        this.$Message.info('新增成功')
                         this.question=''
                         this.remark=''
                         this.answer=''
                     }else{
-                        this.$Message.info('increase failure')
+                        this.$Message.info('failure')
                     }
 
                 })
@@ -100,7 +100,7 @@
 
           },
           cancel () {
-              this.$Message.info('cancel increase question')
+              this.$Message.info('操作已取消')
           }
         },
         computed: {

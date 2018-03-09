@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="app-main">
+      <link rel="icon" href="./assets/img/favicon.ico" type="image/x-icon">
     <router-view></router-view>
   </div>
 </template>

@@ -81,15 +81,15 @@
             }
           },
           backSearch(){
-            //  if(typeof this.id != "undefined" && this.id != null && this.id!= ""){
-            //      this.$api.get('/question/find_by_id' , {id:this.id}, r => {
-            //       //this.words=r.data.data.question
-            //          this.words=this.keywords
-            //         this.searchdle()
-            //     })
-            // }
-             this.words=this.keywords
-             this.searchdle()
+             if(typeof this.id != "undefined" && this.id != null && this.id!= ""){
+                 this.$api.get('/question/find_by_id' , {id:this.id}, r => {
+                  //this.words=r.data.data.question
+                     this.words=this.keywords
+                    this.searchdle()
+                })
+            }
+            // this.words=this.keywords
+             //this.searchdle()
           }
       }
 

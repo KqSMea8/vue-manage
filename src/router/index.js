@@ -51,6 +51,10 @@ export default new Router({
                     path: '/notice_detail:id',
                     component: resolve => require(['../components/page/notice_detail.vue'], resolve)
                 },
+                {
+                    path: '/achievements',
+                    component: resolve => require(['../components/page/achievements.vue'], resolve)
+                },
 
             ]
         },

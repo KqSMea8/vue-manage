@@ -70,44 +70,50 @@ export default {
                   {
                     id:'nav0',
                     menu_name:'notice',
-                    nav_name:'Notice',
+                    nav_name:'内部公告',
                     icon:'android-notifications-none'
                   },
                   {
                     id:'nav1',
                     menu_name:'search',
-                    nav_name:'Search',
+                    nav_name:'搜索-QA',
                     icon:'search'
                   },
                   {
                     id:'nav2',
                     menu_name:'increase',
-                    nav_name:'Increase',
-                    icon:'plus-round'
-                  },
-                  {
-                    id:'nav3',
-                    menu_name:'mavon',
-                    nav_name:'Mavon',
+                    nav_name:'新增-QA',
                     icon:'edit'
                   },
                   {
+                    id:'nav3',
+                    menu_name:'achievements',
+                    nav_name:'绩效考核',
+                    icon:'arrow-graph-up-right'
+                  },
+                  {
                     id:'nav4',
-                    menu_name:'markdown',
-                    nav_name:'Markdown',
-                    icon:'document-text'
+                    menu_name:'mavon',
+                    nav_name:'常用工具',
+                    icon:'wrench'
                   },
                   {
                     id:'nav5',
-                    menu_name:'manage',
-                    nav_name:'Manage',
-                    icon:'upload'
+                    menu_name:'transfer',
+                    nav_name:'接口测试',
+                    icon:'android-hand'
                   },
                   {
                     id:'nav6',
-                    menu_name:'transfer',
-                    nav_name:'Transfer',
-                    icon:'document-text'
+                    menu_name:'markdown',
+                    nav_name:'Markdown',
+                    icon:'planet'
+                  },
+                  {
+                    id:'nav7',
+                    menu_name:'manage',
+                    nav_name:'文件上传',
+                    icon:'upload'
                   }
                 ]
 
@@ -148,9 +154,9 @@ export default {
                           this.$api.get('/notice/count' , null, r => {
                             let count= r.data.data
                             this.$Notice.open({
-                                title: 'Notice',
+                                title: 'Tip',
                                 desc: '有'+count+'条公告需要您查看',
-                                duration: 3
+                                duration: 2
                             })
                           })
 

@@ -1,9 +1,9 @@
 <template>
 <div class="question">
-    <Button type="ghost" shape="circle" size="small"><router-link :to="'/backof' + id">Back</router-link></Button>
-    <Button type="ghost" size="small"  icon="trash-b" @click="modal = true" style="float: right;"></Button>
+    <Button type="ghost" shape="circle" size="small"><router-link :to="'/backof' + id">返回</router-link></Button>
+    <Button type="ghost" size="small"  icon="trash-b" @click="modal = true" style="float: right;">删除</Button>
     <Modal v-model="modal" title="Tip" @on-ok="delQues" @on-cancel="cacel">
-      <p>Do you want del this question of share?</p>
+      <p>确认删除当前记录吗?</p>
     </Modal>
 
     <h1>{{data.question}}</h1>
@@ -32,7 +32,7 @@ export default {
       })
     },
     delQues (){
-      if(this.user==='admin'){
+      if(this.user==='super'){
         this.$api.post('/question/del' , {id:this.id}, r => {
           if(r.data.data===true){
               this.$Message.success('successful operation')

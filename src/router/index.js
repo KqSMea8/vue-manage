@@ -55,6 +55,10 @@ export default new Router({
                     path: '/achievements',
                     component: resolve => require(['../components/page/achievements.vue'], resolve)
                 },
+                {
+                    path: '/record:id',
+                    component: resolve => require(['../components/page/record_detail.vue'], resolve)
+                },
 
             ]
         },

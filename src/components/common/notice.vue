@@ -5,7 +5,9 @@
                     <h3><Icon type="android-notifications" style="margin-right:5px"></Icon><router-link :to="'/notice_detail' + notice.id">{{notice.title}}<p class="content">{{notice.gmt_create}}</p></router-link></h3>
             </div>
       </div>
+       <div style="float: right;">
        <Page :page-size="rows" :show-total="true" :show-sizer="true" @on-change="changepage" :show-elevator="true" :total="total" @on-page-size-change="changesize" style="width:100%;margin-top:5px;margin-bottom: 5px;"></Page>
+      </div>
 </div>
 </template>
 <script>
@@ -63,6 +65,8 @@
 <style scoped>
 .notice {
   margin: 10px 20px 0 0px;
+  width: 100%;
+  height: 765px;
 }
 .notice-content {
   margin: 10px 20px 0 0px;

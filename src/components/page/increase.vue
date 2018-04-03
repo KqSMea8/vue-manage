@@ -1,4 +1,4 @@
-<style media="screen">
+<style media="screen" scoped>
   .rtf-content {
     height: 603px;
   }

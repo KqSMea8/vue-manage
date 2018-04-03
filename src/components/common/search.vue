@@ -17,7 +17,9 @@
             </div>
       </Timeline>
       </div>
+       <div style="float: right;">
        <Page :page-size="rows" :show-total="true" :show-sizer="true" @on-change="changepage" :show-elevator="true" :total="total" @on-page-size-change="changesize" style="width:100%;margin-top:5px;margin-bottom: 5px;margin-left:30px;"></Page>
+     </div>
 </div>
 </template>
 <script>
@@ -99,6 +101,8 @@
 .search {
   margin: 10px 20px 0 30px;
   color: black;
+  width: 100%;
+  height: 765px;
 }
 .search-content {
   margin: 10px 20px 0 30px;

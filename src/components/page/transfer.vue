@@ -1,5 +1,5 @@
 <template>
-  <div id="tran">
+  <div class="tran">
     <div id="formitem" :style="{float: 'left'}">
         <Form ref="formDynamic" :model="formDynamic" :label-width="50" style="width: 350px">
               <FormItem
@@ -127,3 +127,10 @@
         }
     }
 </script>
+<style scoped>
+.tran {
+  margin: 10px 20px 0 0px;
+  width: 100%;
+  height: 765px;
+}
+</style>

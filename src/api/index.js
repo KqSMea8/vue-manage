@@ -1,5 +1,5 @@
 // 配置API接口地址
-var root = 'http://samoyedic.com:8080/demo'
+var root = 'http://47.100.46.175:8080/demo'
 // 引用axios
 var axios = require('axios')
 // 自定义判断元素类型JS

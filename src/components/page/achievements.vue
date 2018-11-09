@@ -734,6 +734,6 @@ import Cookies from 'js-cookie'
   }
 .achievements {
   width: 100%;
-  height: 765px;
+  height: 865px;
 }
 </style>

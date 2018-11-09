@@ -136,7 +136,7 @@ export default {
 <style scoped>
 .tools{
   width: 100%;
-  height: 765px;
+  height: 865px;
 }
 table{
   width: 100%;

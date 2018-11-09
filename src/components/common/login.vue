@@ -1,7 +1,8 @@
 <template>
+<div class="login_bg">
 <div class="wrapper">
 <h1>
-QA录入系统
+Technical
 </h1>
     <div class="login">
       <Form ref="formInline" :model="formInline" :rules="ruleInline" >
@@ -12,7 +13,7 @@ QA录入系统
       </FormItem>
       <FormItem prop="password">
           <Input type="password" v-model="formInline.password" placeholder="Password">
-              <Icon type="ios-locked-outline" slot="prepend"></Icon>
+              <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
       </FormItem>
       <FormItem>
@@ -20,6 +21,7 @@ QA录入系统
       </FormItem>
   </Form>
     </div>
+</div>
 </div>
 
 </template>
@@ -58,19 +60,88 @@ export default {
                     this.$refs[name].validate((valid) => {
                         if (valid) {
                           let form=this.formInline;
-                          if(form.user === 'admin'||form.user === 'super'){
-                              if((form.user === 'admin'&&form.password === 'admin123')||(form.user === 'super'&&form.password === 'super123')){
-                                    Cookies.set('user', form.user);
-                                    Cookies.set('password', form.password);
-                                    this.$Message.success(form.user +',欢迎登录!');
-                                    this.$router.push('/notice');
+                          this.$api.get('/account/login', {account:form.user,password:form.password}, r => {
+
+                              if(r.data.data===null){
+                                this.$Message.error('用户名或密码错误');
                               }else{
-                                  this.$Message.error('密码错误，请重新输入');
+                                Cookies.set('id', r.data.data.id);
+                                Cookies.set('user', r.data.data.account);
+                                Cookies.set('role', r.data.data.role);
+                                Cookies.set('pwd', r.data.data.password);
+                                Cookies.set('nick_name', r.data.data.nick_name);
+                                Cookies.set('group', r.data.data.group);
+                                this.$Message.success(r.data.data.nick_name +',欢迎登录!');
+                                this.$router.push('/account');
+                                if(r.data.data.role==2){
+                                  this.$api.get('/plan/query_audit', null, r => {
+                                    if(r.data.data.length>0){
+                                      let count=r.data.data.length;
+                                      this.$Notice.success({
+                                        title: '友情提示',
+                                        render: h => {
+                                          return h('div', [
+                                              h('span','您有'+count+'条采购计划申请需要审核! '),
+                                            h('a', {
+                                                props: {
+                                                    type: 'info',
+                                                    size: 'small'
+
+                                                },
+                                                style: {
+                                                    marginRight: '3px'
+                                                },
+                                                on: {
+                                                    click: () => {
+                                                        this.toAudit()
+                                                    }
+                                                }
+                                            }, '去处理'),
+
+                                          ]);
+                                        },
+                                        duration: 5
+                                       });
+                                    }
+                                  })
+                                }
+                                if(r.data.data.role==3){
+                                  this.$api.get('/plan/query_execute', null, r => {
+                                    if(r.data.data.length>0){
+                                      let count=r.data.data.length;
+                                      this.$Notice.success({
+                                        title: '友情提示',
+                                        render: h => {
+                                          return h('div', [
+                                              h('span','您有'+count+'条采购计划需要执行! '),
+                                            h('a', {
+                                                props: {
+                                                    type: 'info',
+                                                    size: 'small'
+
+                                                },
+                                                style: {
+                                                    marginRight: '3px'
+                                                },
+                                                on: {
+                                                    click: () => {
+                                                        this.toExecute()
+                                                        //window.open("https://pay.zcy.gov.cn/customer-service/reporting/pplan/detail?id="+id);
+                                                    }
+                                                }
+                                            }, '去执行'),
+
+                                          ]);
+                                        },
+                                        duration: 5
+                                       });
+                                    }
+                                  })
+                                }
                               }
 
-                          }else{
-                            this.$Message.error('用户不存在');
-                          }
+                          })
+
 
                         } else {
                             this.$Message.error('表单验证失败!');
@@ -79,7 +150,13 @@ export default {
                 },
                 handleReset(val) {
                     console.log(val)
-                }
+                },
+               toAudit() {
+                    this.$router.push('/purchase_audit');
+                },
+               toExecute() {
+                    this.$router.push('/purchase_create');
+               }
 
         }
 }
@@ -90,7 +167,7 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    padding-top: 150px;
+    padding-top: 180px;
     padding-bottom: 200px;
 
 }
@@ -98,7 +175,7 @@ export default {
   text-align: center;
   vertical-align: middle;
   margin-bottom: 20px;
-  color: #000;
+  color:white;
 }
 .login {
     margin: 0 auto;
@@ -106,4 +183,8 @@ export default {
     width: 250px;
     height: 100%;
 }
+/* .login_bg{
+    background-image: url('../../assets/img/login-bg.jpg');
+} */
+
 </style>

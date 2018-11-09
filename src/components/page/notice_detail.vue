@@ -18,7 +18,7 @@ export default {
     return {
       id: this.$route.params.id,
       modal:false,
-      user:Cookies.get('user'),
+      role:Cookies.get('role'),
       data:{},
     }
   },
@@ -32,7 +32,7 @@ export default {
       })
     },
     delQues (){
-      if(this.user==='super'){
+      if(this.role==0){
         this.$api.post('/notice/del' , {id:this.id}, r => {
           if(r.data.data===true){
               this.$Message.success('successful operation')
@@ -53,7 +53,7 @@ export default {
 </script>
 <style scoped>
 .notice{
-    height: 763px;
+    height: 865px;
 }
 .notice h1{
   font-style: normal;

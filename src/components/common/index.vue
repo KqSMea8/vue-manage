@@ -5,9 +5,9 @@
   </BackTop>
     <Row type="flex">
         <Col :span="spanLeft" class="layout-menu-left">
-            <Menu :active-name="setActive" theme="dark" width="auto" @on-select="routeTo">
+            <Menu :active-name="setActive" class="layout-menu-left" width="auto" @on-select="routeTo">
                 <div class="layout-logo-left">
-                    <h3>QA Systematic</h3>
+                    <h3>Technical</h3>
                 </div>
                 <li v-for="nav in navdata">
                       <Menu-item v-bind:name="nav.menu_name">
@@ -20,24 +20,22 @@
         <Col :span="spanRight">
             <div class="layout-header">
                 <Button type="text" @click.native="toggleClick">
-                    <Icon type="navicon" size="32"></Icon>
+                    <Icon type="md-walk" size="30"></Icon>
                 </Button>
                 <div class="layout-icon-right">
-                <Icon type="social-sass"></Icon>
-                <Icon type="social-apple"></Icon>
-                <Icon type="social-tux"></Icon>
-                <Icon type="social-twitter"></Icon>
-                <Icon type="social-freebsd-devil"></Icon>
-                <Icon type="social-rss"></Icon>
-                of  {{user}}
-                <Button type="ghost" size="small" shape="circle" icon="log-out" @click="logout"></Button>
+                <Icon type="logo-windows" />
+                <Icon type="logo-apple" />
+                <Icon type="logo-freebsd-devil" />
+                <Icon type="ios-wifi" />
+                欢迎您,{{user}} of {{group}}
+                <Button size="small" shape="circle" icon="md-log-out" @click="logout"></Button>
               </div>
             </div>
             <div class="layout-breadcrumb">
                 <Breadcrumb>
-                    <Breadcrumb-item>Menu</Breadcrumb-item>
-                    <Breadcrumb-item>Nav</Breadcrumb-item>
-                    <Breadcrumb-item>{{this.$route.path.replace('/','')}}</Breadcrumb-item>
+                    <Breadcrumb-item>首页</Breadcrumb-item>
+                    <Breadcrumb-item>导航</Breadcrumb-item>
+                    <Breadcrumb-item>{{this.$route.name}}</Breadcrumb-item>
                 </Breadcrumb>
             </div>
             <div class="layout-content">
@@ -48,7 +46,7 @@
                 </div>
             </div>
             <div class="layout-copy">
-                2017.12&copyright*samoyed
+                2018.05&copyright*samoyed
             </div>
         </Col>
     </Row>
@@ -62,80 +60,33 @@ export default {
 
     data() {
             return {
-                user: Cookies.get('user'),
+                user: Cookies.get('nick_name'),
+                uid:Cookies.get('id'),
+                roles:Cookies.get('role'),
+                group:Cookies.get('group'),
                 spanLeft: 5,
                 spanRight: 19,
                 page: ['search','form','manage'],
-                navdata:[
-                  {
-                    id:'nav0',
-                    menu_name:'notice',
-                    nav_name:'内部公告',
-                    icon:'android-notifications-none'
-                  },
-                  {
-                    id:'nav1',
-                    menu_name:'search',
-                    nav_name:'搜索-QA',
-                    icon:'search'
-                  },
-                  {
-                    id:'nav2',
-                    menu_name:'increase',
-                    nav_name:'新增-QA',
-                    icon:'edit'
-                  },
-                  {
-                    id:'nav3',
-                    menu_name:'achievements',
-                    nav_name:'绩效考核',
-                    icon:'arrow-graph-up-right'
-                  },
-                  {
-                    id:'nav4',
-                    menu_name:'mavon',
-                    nav_name:'常用工具',
-                    icon:'wrench'
-                  },
-                  {
-                    id:'nav5',
-                    menu_name:'transfer',
-                    nav_name:'接口测试',
-                    icon:'android-hand'
-                  },
-                  {
-                    id:'nav6',
-                    menu_name:'markdown',
-                    nav_name:'Markdown',
-                    icon:'planet'
-                  },
-                  {
-                    id:'nav7',
-                    menu_name:'manage',
-                    nav_name:'文件上传',
-                    icon:'upload'
-                  }
-                ]
-
+                navdata:[],
 
             }
         },
         computed: {
             iconSize() {
-                return this.spanLeft === 5 ? 14 : 24;
+                return this.spanLeft === 5 ? 15 : 24;
             },
             setActive() {
               return this.$route.path.replace('/','');
             }
         },
         created () {
-          this.noticeOfAdmin()
+          this.verify()
+          this.doneMenuList()
         },
         methods: {
             toggleClick() {
                     if (this.spanLeft === 5) {
                         this.spanLeft = 2;
-
                         this.spanRight = 22;
                     } else {
                         this.spanLeft = 5;
@@ -146,27 +97,23 @@ export default {
                     //console.log(e);
                     this.$router.push(e);
                 },
-                noticeOfAdmin(){
-                    if(typeof this.user === "undefined"||this.user===null||this.user===''){
+                verify(){
+                    if(typeof this.uid === "undefined"||this.uid===null||this.uid===''){
                         this.$router.push('/login')
-                    }else{
-                        if(this.user==='admin'){
-                          this.$api.get('/notice/count' , null, r => {
-                            let count= r.data.data
-                            this.$Notice.open({
-                                title: 'Tip',
-                                desc: '有'+count+'条公告需要您查看',
-                                duration: 2
-                            })
-                          })
-
-                        }
-
                     }
+
+                },
+                doneMenuList () {
+                  this.$api.get('/menu/init' , {role:this.roles}, r => {
+                    this.navdata = r.data.data
+                  })
                 },
                 logout () {
                   Cookies.set('user', '');
-                  Cookies.set('password', '');
+                  Cookies.set('pwd', '');
+                  Cookies.set('id', '');
+                  Cookies.set('nick_name', '');
+                  Cookies.set('role', '');
                   this.$router.push('/login')
                 }
         }
@@ -188,26 +135,27 @@ export default {
 }
 
 .layout-content {
-    min-height: 600px;
+    min-height: 720px;
     margin: 15px;
-    overflow: hidden;
+    overflow: scroll;
     background: #fff;
     border-radius: 4px;
 }
 
 .layout-content-main {
-    padding: 20px 10px;
+    padding: 5px 5px;
 }
 
 .layout-copy {
     text-align: center;
-    padding: 10px 0 10px;
+    padding: 3px 0 3px;
     color: #9ea7b4;
 }
 
 .layout-menu-left {
-    background: #464c5b;
-    /*min-width: 100px;*/
+    background: #17233d;
+    min-width: 80px;
+    color: #fff;
 }
 
 .layout-header {
@@ -227,7 +175,7 @@ export default {
 .layout-logo-left {
     width: 90%;
     height: 30px;
-    background: #5b6270;
+    background: #17233d;
     border-radius: 3px;
     margin: 15px auto;
     line-height: 30px;

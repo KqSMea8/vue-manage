@@ -17,6 +17,6 @@
 <style scoped>
 .manage{
   margin: 10px 20px 0 30px;
-  height: 754px;
+  height: 865px;
 }
 </style>

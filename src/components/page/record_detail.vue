@@ -215,6 +215,6 @@ export default {
 <style scoped>
 .record{
   width: 100%;
-  height: 765px;
+  height: 865px;
 }
 </style>
